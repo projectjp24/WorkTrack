@@ -8,7 +8,7 @@ import { CompanyController } from './company.controller';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Company]),
+    TypeOrmModule.forFeature([Company, CompanyType, CompanyBranch]),
   ],
   providers: [CompanyService],
   controllers: [CompanyController],

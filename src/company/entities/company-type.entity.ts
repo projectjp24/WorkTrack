@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
+  Timestamp,
 } from 'typeorm';
 import { IsUUID, IsOptional, Length, IsBoolean, IsString } from 'class-validator';
 
@@ -39,18 +40,8 @@ export class CompanyType {
   @IsBoolean()
   is_deleted: boolean;
 
-@CreateDateColumn({
-  type: 'timestamp',
-  precision: 0, 
-  default: () => 'CURRENT_TIMESTAMP',
-})
-created_at: Date;
-
-@UpdateDateColumn({
-  type: 'timestamp',
-  precision: 0, 
-  default: () => 'CURRENT_TIMESTAMP',
-  onUpdate: 'CURRENT_TIMESTAMP',
-})
-updated_at: Date;
+ @CreateDateColumn()
+  createdAt: Timestamp;
+  @UpdateDateColumn()
+  updatedAt: Timestamp;
 }

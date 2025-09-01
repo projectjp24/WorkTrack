@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  Timestamp,
 } from 'typeorm';
 import { IsUUID, IsOptional, Length, IsBoolean, IsEmail } from 'class-validator';
 import { Company } from './company.entity';
@@ -71,19 +72,9 @@ export class CompanyBranch {
   @IsOptional()
   notes?: string;
 
-@CreateDateColumn({
-  type: 'timestamp',
-  precision: 0, 
-  default: () => 'CURRENT_TIMESTAMP',
-})
-created_at: Date;
-
-@UpdateDateColumn({
-  type: 'timestamp',
-  precision: 0, 
-  default: () => 'CURRENT_TIMESTAMP',
-  onUpdate: 'CURRENT_TIMESTAMP',
-})
-updated_at: Date;
+ @CreateDateColumn()
+  createdAt: Timestamp;
+  @UpdateDateColumn()
+  updatedAt: Timestamp;
     users: any;
 }
