@@ -17,7 +17,7 @@ import {
 } from 'class-validator';
 import { Company } from './company.entity';
 import { CompanyType } from './company-type.entity';
-import { User } from './user.entity'; // Assuming you have a User entity
+
 
 @Entity('company_branches')
 export class CompanyBranch {
