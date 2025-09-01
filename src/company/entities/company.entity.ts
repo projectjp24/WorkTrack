@@ -42,10 +42,13 @@ export class Company {
   @IsOptional()
   logo_url?: string;
 
-  @Column({ type: 'uuid', nullable: false, default: () => 'uuid()' })
+  // ✅ Fix: store UUIDs as varchar(36) in MySQL
+  @Column({ type: 'varchar', length: 36, nullable: false })
+  @IsUUID()
   created_by: string;
 
-  @Column({ type: 'uuid', nullable: false, default: () => 'uuid()' })
+  @Column({ type: 'varchar', length: 36, nullable: false })
+  @IsUUID()
   updated_by: string;
 
   @Column({ type: 'boolean', default: true })
@@ -61,12 +64,11 @@ export class Company {
   @IsOptional()
   company_email?: string;
 
-  @Column({ type: 'uuid', nullable: true })
+  @Column({ type: 'varchar', length: 36, nullable: true })
   @IsUUID()
   @IsOptional()
   company_type_id?: string;
 
-  // Relation to CompanyType
   @ManyToOne(() => CompanyType)
   @JoinColumn({ name: 'company_type_id' })
   company_type?: CompanyType;
@@ -88,7 +90,6 @@ export class Company {
   @IsOptional()
   company_website_url?: string;
 
-  // Relation to CompanyBranch
   @OneToMany(() => CompanyBranch, (branch) => branch.company)
   branches?: CompanyBranch[];
 
@@ -106,4 +107,10 @@ export class Company {
     onUpdate: 'CURRENT_TIMESTAMP',
   })
   updated_at: Date;
+
+  users: any;
+  roles: any;
+  rolePermissions: any;
+  permissions: any;
+  departments: any;
 }
