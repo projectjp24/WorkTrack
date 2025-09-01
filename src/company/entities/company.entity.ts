@@ -99,7 +99,7 @@ export class Company {
   createdAt: Timestamp;
   @UpdateDateColumn()
   updatedAt: Timestamp;
-  updated_at: Date;
+
   users: any;
   roles: any;
   rolePermissions: any;

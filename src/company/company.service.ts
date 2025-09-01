@@ -22,7 +22,7 @@ export class CompanyService {
   async findAll(): Promise<Company[]> {
     return await this.companyRepo.find({
       relations: ['company_type', 'branches'],
-      // order: { created_at: 'DESC' },
+      // order: { updatedAt: 'DESC' },
     });
   }
 
@@ -60,7 +60,10 @@ export class CompanyService {
     company.is_active = false;
      company.status = 'Inactive'; 
     company.updated_by = userId;
-    company.updated_at = new Date();
+    // Use MongoDB Timestamp for updatedAt
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { Timestamp } = require('mongodb');
+    company.updatedAt = Timestamp.fromNumber(Date.now());
     await this.companyRepo.save(company);
 
     await this.companyRepo.save(company);
