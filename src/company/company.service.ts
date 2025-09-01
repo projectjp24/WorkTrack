@@ -22,7 +22,7 @@ export class CompanyService {
   async findAll(): Promise<Company[]> {
     return await this.companyRepo.find({
       relations: ['company_type', 'branches'],
-      order: { created_at: 'DESC' },
+      // order: { created_at: 'DESC' },
     });
   }
 

@@ -9,7 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { CompanyModule } from './company/company.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), UserManagementModule, AuthModule, CompanyModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), CompanyModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -8,6 +8,7 @@ import {
   OneToMany,
   ManyToOne,
   JoinColumn,
+  Timestamp,
 } from 'typeorm';
 import { IsEmail, IsUrl, IsOptional, Length, IsBoolean, IsUUID } from 'class-validator';
 import { CompanyType } from './company-type.entity';
@@ -94,23 +95,14 @@ export class Company {
   @OneToMany(() => CompanyBranch, (branch) => branch.company)
   branches?: CompanyBranch[];
 
-@CreateDateColumn({
-  type: 'timestamp',
-  precision: 0, 
-  default: () => 'CURRENT_TIMESTAMP',
-})
-created_at: Date;
-
-@UpdateDateColumn({
-  type: 'timestamp',
-  precision: 0, 
-  default: () => 'CURRENT_TIMESTAMP',
-  onUpdate: 'CURRENT_TIMESTAMP',
-})
-updated_at: Date;
-    users: any;
-    roles: any;
-    rolePermissions: any;
-    permissions: any;
-    departments: any;
+  @CreateDateColumn()
+  createdAt: Timestamp;
+  @UpdateDateColumn()
+  updatedAt: Timestamp;
+  updated_at: Date;
+  users: any;
+  roles: any;
+  rolePermissions: any;
+  permissions: any;
+  departments: any;
 }
