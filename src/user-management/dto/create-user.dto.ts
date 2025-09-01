@@ -10,10 +10,12 @@ export class CreateUserDto {
     @IsString()
     @ApiProperty({example: 'sdfgsff5gs5fg', description: 'The company ID of the user'})
     company_id: string;
+
     @IsNotEmpty()
     @IsString()
     @ApiProperty({example: 'John', description: 'The first name of the user'})
     first_name: string;
+    
     @IsNotEmpty()
     @IsString()
     @ApiProperty({example: 'Doe', description: 'The last name of the user'})

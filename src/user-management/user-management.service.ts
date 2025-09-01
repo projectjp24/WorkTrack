@@ -5,6 +5,7 @@ import { userEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { hash } from 'bcrypt';
 import { UpdateUserDto } from './dto/update-user.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserManagementService {
@@ -17,7 +18,8 @@ export class UserManagementService {
     const existingUser = await this.findUserByUsername(createUserDto.username);
     if (existingUser) throw new Error('user with this username already exists');
 
-    createUserDto.password = await hash(createUserDto.password, 10);
+    const salt = await bcrypt.genSalt(10);
+    createUserDto.password = await hash(createUserDto.password, salt);
 
     let user = this.userRepository.create({
       ...createUserDto,
@@ -29,11 +31,43 @@ export class UserManagementService {
   }
 
   async findAll(p0: { select: string[] }): Promise<userEntity[]> {
-    return await this.userRepository.find();
+    const users = await this.userRepository.
+    createQueryBuilder('user')
+    .innerJoinAndSelect('user.role', 'role')
+    .innerJoinAndSelect('user.department', 'department')
+    .innerJoinAndSelect('user.company', 'company')
+    .where('user.is_deleted = :is_deleted AND user.is_active = :is_active', { is_deleted: false, is_active: true})
+    .select([
+      'user.user_id',
+      'user.employee_id',
+      'user.company_id',
+      'company.company_name',
+      'user.branch_id',
+      'user.first_name',
+      'user.last_name',
+      'user.username',
+      'user.email',
+      'user.address',
+      'user.phone_number',
+      'user.date_of_birth',
+      'user.department_id',
+      'department.department_name',
+      'user.status',
+      'user.role_id',
+      'role.role_name',
+    ])
+
+    return await users.getMany();
   }
 
   async findOne(user_id: string): Promise<userEntity | null> {
-    return await this.userRepository.findOneBy({ user_id });
+    return await this.userRepository.findOne({
+      where: {
+        user_id,
+        is_deleted: false,
+        is_active: true,
+      }
+    });
   }
 
   async update(
@@ -42,6 +76,14 @@ export class UserManagementService {
   ): Promise<userEntity> {
     const user = await this.findOne(user_id);
     if (!user) throw new NotFoundException('User Not Found');
+
+    if (fields.password && fields.password.trim() !== ''){
+      const salt = await bcrypt.genSalt(10);
+      fields.password = await bcrypt.hash(fields.password, salt);
+    } else{
+      delete fields.password;
+    }
+
     Object.assign(user, fields);
     return this.userRepository.save(user);
   }

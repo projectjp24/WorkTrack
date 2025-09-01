@@ -2,9 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } fro
 import { UserManagementService } from './user-management.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiSecurity } from '@nestjs/swagger';
 import { CreateUserDto } from './dto/create-user.dto';
 import { userEntity } from './entities/user.entity';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { Roles } from 'src/common/decorators/roles.decorator';
+import { ApiSecurity } from '@nestjs/swagger';
 
 
 @Controller('user-management')
@@ -17,7 +19,9 @@ export class UserManagementController {
      return { message: 'User Added Successfully' };
   }
 
-  
+  // @UseGuards(AuthGuard('jwt'), RolesGuard)
+  // @Roles('SuperAdmin')
+  // @ApiSecurity("JWT-auth")
   @Get('all')
   async findAll(@Req() req: Request): Promise<userEntity[]> {
     return await this.userManagementService.findAll({ select: ['*'] });

@@ -3,16 +3,20 @@ import { UserManagementService } from './user-management.service';
 import { UserManagementController } from './user-management.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { userEntity } from './entities/user.entity';
-import { departmentEntity } from './entities/department.entity';
-import { role_permissionEntity } from './entities/roles-permission.entity';
-import { roleEntity } from './entities/roles.entity';
-import { permission_Entity } from './entities/permission.entity';
+import { DepartmentEntity } from './entities/department.entity';
+import { RolePermissionEntity } from './entities/roles-permission.entity';
+import { RoleEntity } from './entities/roles.entity';
+import { PermissionEntity } from './entities/permission.entity';
+import { RoleManagmentController } from './role-management/role-management.module';
+import { RoleManagementService } from './role-management/role-management.service';
+import { DepartmentManagmentController } from './department-management/department-management.controller';
+import { DepartmentManagementService } from './department-management/department-management.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([userEntity,role_permissionEntity,roleEntity,permission_Entity,departmentEntity
+  imports: [TypeOrmModule.forFeature([userEntity,RolePermissionEntity,RoleEntity,PermissionEntity,DepartmentEntity
   ])],
-  controllers: [UserManagementController],
-  providers: [UserManagementService],
+  controllers: [UserManagementController, RoleManagmentController, DepartmentManagmentController],
+  providers: [UserManagementService, RoleManagementService, DepartmentManagementService],
 })
 
 export class UserManagementModule {}

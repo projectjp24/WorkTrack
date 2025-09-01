@@ -17,8 +17,6 @@ import {
 } from 'class-validator';
 import { Company } from './company.entity';
 import { CompanyType } from './company-type.entity';
-
-
 @Entity('company_branches')
 export class CompanyBranch {
   @PrimaryGeneratedColumn('uuid')

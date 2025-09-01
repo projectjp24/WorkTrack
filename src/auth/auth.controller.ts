@@ -1,8 +1,9 @@
-import { Controller, Post, Body, Req, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, Req, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiSecurity } from '@nestjs/swagger';
+import * as jwt from 'jsonwebtoken';
 
 @Controller('auth')
 export class AuthController {
@@ -16,6 +17,13 @@ export class AuthController {
     return {user, AccessToken};
   }
 
+  @Post('/decode-token')
+  async decodeToken(@Body('token') token: string) {
+  return this.authService.decodeToken(token);
+  }
+}
+
+
   // @UseGuards(AuthGuard('jwt-refresh'))
   // @ApiSecurity("JWT-refresh")
   // @Post('/refresh-token')
@@ -27,4 +35,3 @@ export class AuthController {
   //     user : user
   //   }
   // }
-}

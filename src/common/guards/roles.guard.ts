@@ -1,6 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Observable } from 'rxjs';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 
 @Injectable()
@@ -13,11 +12,20 @@ export class RolesGuard implements CanActivate {
       [context.getHandler(), context.getClass()],
     );
 
+    // If no roles are required → allow access
     if (!requiredRoles || requiredRoles.length === 0) {
       return true;
     }
 
-    const { user } = context.switchToHttp().getRequest();
-    return requiredRoles.includes(user.role);
+     // Support both single role and multiple roles
+    const request = context.switchToHttp().getRequest();
+    const user = request.user;
+    const userRoles: string[] = Array.isArray(user?.roles)
+      ? user.roles
+      : user?.role_name ? [user.role_name] : []; // fallback to single role from JWT
+
+    // Allow if any required role matches
+    return requiredRoles.some(role => userRoles.includes(role));
   }
 }
+

@@ -15,7 +15,7 @@ export class RefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-refres
         console.log('Refresh Token Secret exists:', !!configService.get<string>('REFRESH_TOKEN_SECRET'));
     }
     async validate(payload: any){
-        console.log('refresh payload', payload)
+        // console.log('refresh payload', payload)
         return { userId: payload.sub, username: payload.username, role: payload.role };
     }
 }
