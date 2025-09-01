@@ -42,12 +42,11 @@ export class Company {
   @IsOptional()
   logo_url?: string;
 
-  // ✅ Fix: store UUIDs as varchar(36) in MySQL
-  @Column({ type: 'varchar', length: 36, nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   @IsUUID()
   created_by: string;
 
-  @Column({ type: 'varchar', length: 36, nullable: false })
+  @Column({ type: 'uuid', nullable: false })
   @IsUUID()
   updated_by: string;
 
@@ -64,11 +63,12 @@ export class Company {
   @IsOptional()
   company_email?: string;
 
-  @Column({ type: 'varchar', length: 36, nullable: true })
+  @Column({ type: 'uuid', nullable: true })
   @IsUUID()
   @IsOptional()
   company_type_id?: string;
 
+  // Relation to CompanyType
   @ManyToOne(() => CompanyType)
   @JoinColumn({ name: 'company_type_id' })
   company_type?: CompanyType;
@@ -90,27 +90,27 @@ export class Company {
   @IsOptional()
   company_website_url?: string;
 
+  // Relation to CompanyBranch
   @OneToMany(() => CompanyBranch, (branch) => branch.company)
   branches?: CompanyBranch[];
 
-  @CreateDateColumn({
-    type: 'timestamp',
-    precision: 0,
-    default: () => 'CURRENT_TIMESTAMP',
-  })
-  created_at: Date;
+@CreateDateColumn({
+  type: 'timestamp',
+  precision: 0, 
+  default: () => 'CURRENT_TIMESTAMP',
+})
+created_at: Date;
 
-  @UpdateDateColumn({
-    type: 'timestamp',
-    precision: 0,
-    default: () => 'CURRENT_TIMESTAMP',
-    onUpdate: 'CURRENT_TIMESTAMP',
-  })
-  updated_at: Date;
-
-  users: any;
-  roles: any;
-  rolePermissions: any;
-  permissions: any;
-  departments: any;
+@UpdateDateColumn({
+  type: 'timestamp',
+  precision: 0, 
+  default: () => 'CURRENT_TIMESTAMP',
+  onUpdate: 'CURRENT_TIMESTAMP',
+})
+updated_at: Date;
+    users: any;
+    roles: any;
+    rolePermissions: any;
+    permissions: any;
+    departments: any;
 }
