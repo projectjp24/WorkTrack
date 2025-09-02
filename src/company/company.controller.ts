@@ -24,13 +24,13 @@ export class CompanyController {
     return await this.companyService.findAll();
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Get a company by ID' })
-  @ApiResponse({ status: 200, description: 'Company found', type: Company })
-  @ApiResponse({ status: 404, description: 'Company not found' })
-  async findOne(@Param('id') id: string): Promise<Company> {
-    return await this.companyService.findOne(id);
-  }
+@Get(':id')
+@ApiOperation({ summary: 'Get a company by ID with bank accounts' })
+@ApiResponse({ status: 200, description: 'Company found', type: Company })
+@ApiResponse({ status: 404, description: 'Company not found' })
+async findOne(@Param('id') id: string): Promise<Company> {
+  return await this.companyService.findByIdWithDetails(id);
+}
 
   @Put(':id')
   @ApiOperation({ summary: 'Update a company by ID' })

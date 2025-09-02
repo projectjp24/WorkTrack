@@ -19,12 +19,12 @@ export class UserManagementController {
      return { message: 'User Added Successfully' };
   }
 
-  // @UseGuards(AuthGuard('jwt'), RolesGuard)
-  // @Roles('SuperAdmin')
-  // @ApiSecurity("JWT-auth")
-  @Get('all')
-  async findAll(@Req() req: Request): Promise<userEntity[]> {
-    return await this.userManagementService.findAll({ select: ['*'] });
+@UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles('SuperAdmin')
+  @ApiSecurity("JWT-auth")
+  @Get('all/:company_id')
+  async findAll(@Param('company_id') company_id: string): Promise<userEntity[]> {
+    return await this.userManagementService.findAll(company_id);
   }
 
   // @Get('EmployeeId')

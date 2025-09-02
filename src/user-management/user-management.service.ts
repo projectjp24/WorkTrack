@@ -30,13 +30,14 @@ export class UserManagementService {
     return user;
   }
 
-  async findAll(p0: { select: string[] }): Promise<userEntity[]> {
+  async findAll(company_id: string): Promise<userEntity[]> {
     const users = await this.userRepository.
     createQueryBuilder('user')
     .innerJoinAndSelect('user.role', 'role')
     .innerJoinAndSelect('user.department', 'department')
     .innerJoinAndSelect('user.company', 'company')
     .where('user.is_deleted = :is_deleted AND user.is_active = :is_active', { is_deleted: false, is_active: true})
+    .andWhere('user.company_id = :company_id', { company_id })
     .select([
       'user.user_id',
       'user.employee_id',
@@ -56,8 +57,9 @@ export class UserManagementService {
       'user.role_id',
       'role.role_name',
     ])
+    .getMany()
 
-    return await users.getMany();
+    return users;
   }
 
   async findOne(user_id: string): Promise<userEntity | null> {

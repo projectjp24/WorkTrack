@@ -4,16 +4,14 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  Index,
   Timestamp,
 } from 'typeorm';
-import { IsUUID, IsOptional, Length, IsBoolean, IsString } from 'class-validator';
+import { IsUUID, IsOptional, Length, IsBoolean } from 'class-validator';
 
 @Entity('company_types')
-
 export class CompanyType {
   @PrimaryGeneratedColumn('uuid')
-  @IsString()
+  @IsUUID()
   company_type_id: string;
 
   @Column({ type: 'varchar', length: 100, nullable: false })
@@ -40,8 +38,9 @@ export class CompanyType {
   @IsBoolean()
   is_deleted: boolean;
 
- @CreateDateColumn()
+@CreateDateColumn()
   createdAt: Timestamp;
   @UpdateDateColumn()
   updatedAt: Timestamp;
+  updated_at: Date;
 }

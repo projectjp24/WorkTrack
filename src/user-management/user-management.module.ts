@@ -7,7 +7,7 @@ import { DepartmentEntity } from './entities/department.entity';
 import { RolePermissionEntity } from './entities/roles-permission.entity';
 import { RoleEntity } from './entities/roles.entity';
 import { PermissionEntity } from './entities/permission.entity';
-import { RoleManagmentController } from './role-management/role-management.module';
+import { RoleManagmentController } from './role-management/role-management.controller';
 import { RoleManagementService } from './role-management/role-management.service';
 import { DepartmentManagmentController } from './department-management/department-management.controller';
 import { DepartmentManagementService } from './department-management/department-management.service';

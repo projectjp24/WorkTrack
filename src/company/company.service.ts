@@ -22,7 +22,7 @@ export class CompanyService {
   async findAll(): Promise<Company[]> {
     return await this.companyRepo.find({
       relations: ['company_type', 'branches'],
-      // order: { updatedAt: 'DESC' },
+      order: { createdAt: 'DESC' },
     });
   }
 
@@ -60,12 +60,27 @@ export class CompanyService {
     company.is_active = false;
      company.status = 'Inactive'; 
     company.updated_by = userId;
-    // Use MongoDB Timestamp for updatedAt
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { Timestamp } = require('mongodb');
-    company.updatedAt = Timestamp.fromNumber(Date.now());
+    // company.createdAt = new Date();
     await this.companyRepo.save(company);
 
     await this.companyRepo.save(company);
   }
+
+  async findAllWithDetails(): Promise<Company[]> {
+  return this.companyRepo.find({
+    relations: ['branches', 'company_type', 'bankAccounts'],
+  });
+}
+
+async findByIdWithDetails(company_id: string): Promise<Company> {
+  const company = await this.companyRepo.findOne({
+    where: { company_id },
+    relations: ['branches', 'company_type', 'bankAccounts'],
+  });
+  if (!company) {
+    throw new NotFoundException(`Company with ID ${company_id} not found`);
+  }
+  return company;
+
+}
 }

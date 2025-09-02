@@ -37,8 +37,10 @@ export class AuthService {
 async findByUsernameOrEmpId(identifier: string) {
   const user = await this.authRepository
     .createQueryBuilder('user')
+    .addSelect(['user.phone_number'])
     .innerJoinAndSelect('user.role', 'role')
-    .leftJoinAndSelect('user.company', 'company')
+    .innerJoinAndSelect('user.company', 'company')
+    .innerJoinAndSelect('user.department', 'department')
     .where('(user.username = :identifier OR user.employee_id = :identifier)', { identifier })
     .getOne();
 
@@ -135,6 +137,7 @@ async findByUsernameOrEmpId(identifier: string) {
       company_id: user.company_id,
       branch_id: user.branch_id,
       department_id: user.department_id,
+      phone_number: user.phone_number,
     };
  
     // console.log("JWT Payload:", payload);

@@ -6,49 +6,52 @@ import {
   UpdateDateColumn,
   ManyToOne,
   JoinColumn,
+  OneToMany,
   Timestamp,
 } from 'typeorm';
-import { IsUUID, IsOptional, Length, IsBoolean, IsEmail } from 'class-validator';
+import {
+  IsUUID,
+  IsOptional,
+  Length,
+  IsBoolean,
+  IsEmail,
+} from 'class-validator';
 import { Company } from './company.entity';
 import { CompanyType } from './company-type.entity';
-
 @Entity('company_branches')
 export class CompanyBranch {
   @PrimaryGeneratedColumn('uuid')
-  @IsUUID()
   branch_id: string;
 
   // Relation to Company
-  @Column({ type: 'uuid', nullable: false })
-  @IsUUID()
+  @Column({ type: 'uuid' })
   company_id: string;
 
-  @ManyToOne(() => Company, (company) => company.branches)
+  @ManyToOne(() => Company, (company) => company.branches, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'company_id' })
   company: Company;
 
-  // Optional relation to CompanyType (inherited from company)
+  // Optional relation to CompanyType
   @Column({ type: 'uuid', nullable: true })
-  @IsUUID()
   @IsOptional()
   company_type_id?: string;
 
-  @ManyToOne(() => CompanyType)
+  @ManyToOne(() => CompanyType, { nullable: true })
   @JoinColumn({ name: 'company_type_id' })
   company_type?: CompanyType;
 
-  // Branch-specific fields
-  @Column({ type: 'varchar', length: 100, nullable: false })
+  // Branch details
+  @Column({ type: 'varchar', length: 100 })
   @Length(2, 100)
   branch_name: string;
 
-  @Column({ type: 'varchar', length: 255, nullable: false })
+  @Column({ type: 'varchar', length: 255 })
   branch_address: string;
 
-  @Column({ type: 'varchar', length: 100, nullable: false })
-  branch_contact: string;
+  @Column({ type: 'varchar', length: 100 })
+  branch_contact: string; // maybe rename to `branch_contact_person`
 
-  @Column({ type: 'varchar', length: 100, nullable: false })
+  @Column({ type: 'varchar', length: 100 })
   branch_manager_name: string;
 
   @Column({ type: 'varchar', length: 100, nullable: true })

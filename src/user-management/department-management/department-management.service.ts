@@ -10,10 +10,11 @@ export class DepartmentManagementService {
         private departmentRepository: Repository<DepartmentEntity>
     ) {}
 
-    async getAllDepartment(p0: { select: string[] }){
+    async getAllDepartment(company_id: string){
         try {
             return await this.departmentRepository.find({
                 where: {
+                    company: { company_id },
                     is_deleted: false,
                     is_active: true,
                 }

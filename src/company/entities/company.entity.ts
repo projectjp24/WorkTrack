@@ -4,15 +4,14 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  Index,
   OneToMany,
   ManyToOne,
   JoinColumn,
-  Timestamp,
 } from 'typeorm';
 import { IsEmail, IsUrl, IsOptional, Length, IsBoolean, IsUUID } from 'class-validator';
 import { CompanyType } from './company-type.entity';
 import { CompanyBranch } from './company-branch.entity';
+import { CompanyBankAccount } from '../entities/company-bank-account.entity';
 
 @Entity('company')
 export class Company {
@@ -43,11 +42,11 @@ export class Company {
   @IsOptional()
   logo_url?: string;
 
-  @Column({ type: 'uuid', nullable: false })
+  @Column({ type: 'varchar', length: 36, nullable: false })
   @IsUUID()
   created_by: string;
 
-  @Column({ type: 'uuid', nullable: false })
+  @Column({ type: 'varchar', length: 36, nullable: false })
   @IsUUID()
   updated_by: string;
 
@@ -64,12 +63,11 @@ export class Company {
   @IsOptional()
   company_email?: string;
 
-  @Column({ type: 'uuid', nullable: true })
+  @Column({ type: 'varchar', length: 36, nullable: true })
   @IsUUID()
   @IsOptional()
   company_type_id?: string;
 
-  // Relation to CompanyType
   @ManyToOne(() => CompanyType)
   @JoinColumn({ name: 'company_type_id' })
   company_type?: CompanyType;
@@ -91,14 +89,20 @@ export class Company {
   @IsOptional()
   company_website_url?: string;
 
-  // Relation to CompanyBranch
   @OneToMany(() => CompanyBranch, (branch) => branch.company)
   branches?: CompanyBranch[];
 
-  @CreateDateColumn()
-  createdAt: Timestamp;
-  @UpdateDateColumn()
-  updatedAt: Timestamp;
+  // ✅ New relation to Bank Accounts
+  @OneToMany(() => CompanyBankAccount, (account) => account.company, {
+    cascade: true,
+  })
+  bankAccounts?: CompanyBankAccount[];
+
+  @CreateDateColumn({ type: 'datetime' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: 'datetime' })
+  updatedAt: Date;
 
   users: any;
   roles: any;
