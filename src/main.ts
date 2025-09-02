@@ -5,8 +5,9 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-   app.enableCors({
-    origin:"https://worktrack.softgoway.in", // React frontend origin
+  app.enableCors({
+    origin: 'https://worktrack.softgoway.in/', // React frontend origin
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,  
   });
 
