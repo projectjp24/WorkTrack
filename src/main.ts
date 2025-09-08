@@ -8,7 +8,7 @@ async function bootstrap() {
 
   app.enableCors({
     origin: 'https://worktrack.softgoway.in', // React frontend origin
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
     credentials: true,  
   });
 
