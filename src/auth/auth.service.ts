@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { userEntity } from 'src/user-management/entities/user.entity';
+import { UserEntity } from 'src/user-management/entities/user.entity';
 import { Repository } from 'typeorm';
 import { compare } from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
@@ -16,8 +16,8 @@ import { Company } from 'src/company/entities/company.entity';
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(userEntity)
-    private authRepository: Repository<userEntity>,
+    @InjectRepository(UserEntity)
+    private authRepository: Repository<UserEntity>,
   ) {}
  
  async login(dto: CreateAuthDto) {
@@ -89,7 +89,7 @@ async findByUsernameOrEmpId(identifier: string) {
   return user;
 }
  
-  // accesstoken = (user: userEntity) => {
+  // accesstoken = (user: UserEntity) => {
   //   const secret = process.env.ACCESS_TOKEN_SECRET;
  
   //   if (!secret || typeof secret !== 'string') {
@@ -113,7 +113,7 @@ async findByUsernameOrEmpId(identifier: string) {
   //     signOptions,
   //   );
  
-  accesstoken = (user: userEntity & { role: RoleEntity, company: Company }) => {
+  accesstoken = (user: UserEntity & { role: RoleEntity, company: Company }) => {
     const secret = process.env.ACCESS_TOKEN_SECRET;
  
     if (!secret || typeof secret !== 'string') {

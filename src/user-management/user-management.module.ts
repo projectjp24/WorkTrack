@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { UserManagementService } from './user-management.service';
 import { UserManagementController } from './user-management.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { userEntity } from './entities/user.entity';
+import { UserEntity } from './entities/user.entity';
 import { DepartmentEntity } from './entities/department.entity';
 import { RolePermissionEntity } from './entities/roles-permission.entity';
 import { RoleEntity } from './entities/roles.entity';
@@ -13,7 +13,7 @@ import { DepartmentManagmentController } from './department-management/departmen
 import { DepartmentManagementService } from './department-management/department-management.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([userEntity,RolePermissionEntity,RoleEntity,PermissionEntity,DepartmentEntity
+  imports: [TypeOrmModule.forFeature([UserEntity,RolePermissionEntity,RoleEntity,PermissionEntity,DepartmentEntity
   ])],
   controllers: [UserManagementController, RoleManagmentController, DepartmentManagmentController],
   providers: [UserManagementService, RoleManagementService, DepartmentManagementService],

@@ -16,7 +16,7 @@ import {
 } from 'typeorm';
 
 @Entity('users')
-export class userEntity {
+export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   user_id: string;
   @Column({ unique: true })
@@ -53,7 +53,7 @@ export class userEntity {
   @Column({ nullable: true })
   company_id: string;
   @Column({ nullable: true })
-  branch_id?: string;
+  branch_id?: string | null;
   @Column()
   first_name: string;
   @Column()

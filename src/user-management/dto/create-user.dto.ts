@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsDateString, IsEmail, IsEmpty, IsNotEmpty, IsString } from "class-validator";
+import { IsDate, IsDateString, IsEmail, IsEmpty, IsNotEmpty, IsOptional, IsString } from "class-validator";
 
 export class CreateUserDto {
     @IsNotEmpty()
@@ -34,15 +34,15 @@ export class CreateUserDto {
     password: string;
     @IsNotEmpty()
     @IsString()
-    @ApiProperty({example: 'test colony ', description: 'The email of the user'})
+    @ApiProperty({example: 'test colony', description: 'The email of the user'})
     address: string;
     @IsNotEmpty()
     @IsString()
-    @ApiProperty({example: '7485969887 ', description: 'Phone number of the user'})
+    @ApiProperty({example: '7485969887', description: 'Phone number of the user'})
     phone_number: string;
     @IsNotEmpty()
     @IsDateString()
-    @ApiProperty({example: 'test colony ', description: 'The email of the user'})
+    @ApiProperty({example: '01-01-1999', description: 'Date of birth of the user'})
     date_of_birth: string;
     @IsNotEmpty()
     @IsString()
@@ -56,6 +56,7 @@ export class CreateUserDto {
     @IsString()
     @ApiProperty({example: 'sdfgsff5gs5fg', description: 'The employee ID of the user'})
     role_id: string;
+    @IsOptional()
     @IsString()
     @ApiProperty({example: "adjflaksdfkaksd", description: 'The active status of the user'})
     branch_id?: string;

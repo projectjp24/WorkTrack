@@ -11,7 +11,7 @@ import {
 import { IsEmail, IsUrl, IsOptional, Length, IsBoolean, IsUUID } from 'class-validator';
 import { CompanyType } from './company-type.entity';
 import { CompanyBranch } from './company-branch.entity';
-import { CompanyBankAccount } from '../entities/company-bank-account.entity';
+import { CompanyBankEntity } from './company-bank-details.entity'; // Adjust path if needed
 
 @Entity('company')
 export class Company {
@@ -92,11 +92,11 @@ export class Company {
   @OneToMany(() => CompanyBranch, (branch) => branch.company)
   branches?: CompanyBranch[];
 
-  // ✅ New relation to Bank Accounts
-  @OneToMany(() => CompanyBankAccount, (account) => account.company, {
+  // ✅ One-to-many relationship to CompanyBankEntity
+  @OneToMany(() => CompanyBankEntity, (bankAccount) => bankAccount.company, {
     cascade: true,
   })
-  bankAccounts?: CompanyBankAccount[];
+  bankAccounts?: CompanyBankEntity[];
 
   @CreateDateColumn({ type: 'datetime' })
   createdAt: Date;
@@ -104,9 +104,10 @@ export class Company {
   @UpdateDateColumn({ type: 'datetime' })
   updatedAt: Date;
 
-  users: any;
-  roles: any;
-  rolePermissions: any;
-  permissions: any;
-  departments: any;
+  // Other relations or properties
+  users?: any;
+  roles?: any;
+  rolePermissions?: any;
+  permissions?: any;
+  departments?: any;
 }
