@@ -6,10 +6,11 @@ import { ValidationPipe } from '@nestjs/common/pipes/validation.pipe';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors({
-    origin: 'https://worktrack.softgoway.in', // React frontend origin
-    methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
-    credentials: true,  
+   app.enableCors({
+    origin: ['https://worktrack.softgoway.in'], 
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, 
   });
 
   const config = new DocumentBuilder()
