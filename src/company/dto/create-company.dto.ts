@@ -28,11 +28,11 @@ export class CreateCompanyDto {
   logo_url?: string;
 
   @ApiProperty({ description: 'User ID of creator (UUID)', example: 'a3e8d7c1-5c73-4d2c-bb93-12cdd9f4567a' })
-  @IsUUID()
+  @IsString()
   created_by: string;
 
   @ApiProperty({ description: 'User ID of updater (UUID)', example: 'b4f2e6d9-8a12-41e0-bbe3-98ad5f9cd567' })
-  @IsUUID()
+  @IsString()
   updated_by: string;
 
   @ApiPropertyOptional({ description: 'Official company email address', example: 'info@techcorp.com' })

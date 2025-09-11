@@ -6,12 +6,14 @@ import { CompanyBranch } from './entities/company-branch.entity';
 import { CompanyService } from './company.service';
 import { CompanyController } from './company.controller';
 import { CompanyBankEntity } from './entities/company-bank-details.entity';
+import { CompanyBankDetailsService } from './company_bank_details/company_bank_details.service';
+import { CompanyBankDetailController } from './company_bank_details/company_bank_details.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Company, CompanyType, CompanyBranch, CompanyBankEntity]),
   ],
-  providers: [CompanyService],
-  controllers: [CompanyController],
+  providers: [CompanyService, CompanyBankDetailsService],
+  controllers: [CompanyController, CompanyBankDetailController],
 })
 export class CompanyModule {}

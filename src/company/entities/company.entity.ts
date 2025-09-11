@@ -110,4 +110,5 @@ export class Company {
   rolePermissions?: any;
   permissions?: any;
   departments?: any;
+  system_settings: any;
 }

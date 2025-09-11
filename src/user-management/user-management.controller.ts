@@ -18,6 +18,9 @@ import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { ApiSecurity } from '@nestjs/swagger';
 
+@UseGuards(AuthGuard('jwt'), RolesGuard)
+@Roles('SuperAdmin')
+@ApiSecurity('JWT-auth')
 @Controller('user-management')
 export class UserManagementController {
   constructor(private readonly userManagementService: UserManagementService) {}
@@ -31,9 +34,6 @@ export class UserManagementController {
     return { message: 'User Added Successfully' };
   }
 
-  @UseGuards(AuthGuard('jwt'), RolesGuard)
-  @Roles('SuperAdmin')
-  @ApiSecurity('JWT-auth')
   @Get('all/:company_id')
   async findAll(
     @Param('company_id') company_id: string,

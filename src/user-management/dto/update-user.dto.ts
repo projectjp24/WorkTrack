@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/swagger';
 import { CreateUserDto } from './create-user.dto';
-import { IsOptional, IsString, IsUUID } from 'class-validator';
+import { IsBoolean, IsOptional, IsString, IsUUID } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
@@ -12,4 +12,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     @IsUUID()
     @Transform(({ value }) => (value === '' ? undefined : value))  // convert '' -> undefined
     department_id?: string;
+
+    @IsOptional()
+    @IsBoolean()
+    is_active: boolean;
 }

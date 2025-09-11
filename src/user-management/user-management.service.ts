@@ -42,10 +42,7 @@ export class UserManagementService {
       .innerJoinAndSelect('user.role', 'role')
       .innerJoinAndSelect('user.department', 'department')
       .innerJoinAndSelect('user.company', 'company')
-      .where('user.is_deleted = :is_deleted AND user.is_active = :is_active', {
-        is_deleted: false,
-        is_active: true,
-      })
+      .where('user.is_deleted = :is_deleted', {is_deleted: false})
       .andWhere('user.company_id = :company_id', { company_id })
       .select([
         'user.user_id',
@@ -65,6 +62,7 @@ export class UserManagementService {
         'user.status',
         'user.role_id',
         'role.role_name',
+        'user.is_active'
       ])
       .getMany();
 
@@ -80,7 +78,6 @@ export class UserManagementService {
         company_id,
         user_id,
         is_deleted: false,
-        is_active: true,
       },
     });
   }
