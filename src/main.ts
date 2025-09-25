@@ -7,7 +7,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
    app.enableCors({
-    origin: ['https://worktrack.softgoway.in','http://localhost:5173','https://https://worktrack.dhpecrm.in'], // your frontend URL
+    origin: ['https://worktrack.softgoway.in','http://localhost:5173','https://worktrack.dhpecrm.in'], // your frontend URL
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true, 
