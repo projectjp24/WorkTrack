@@ -1,15 +1,12 @@
-// project.dto.ts
 import { ApiProperty, ApiPropertyOptional } from "@nestjs/swagger";
-import { Type } from "class-transformer";
-import { IsArray, IsDateString, IsEnum, IsNumber, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
-import { CreateIncomeCategoryDto } from "../../accounts/projects/dto/income-categories.dto";
-import { ProjectExpenseCategory } from "../../accounts/projects/dto/expense-category.dto"; // ADDED THIS
+import { IsDateString, IsEnum, IsNumber, IsOptional, IsString, IsUUID, } from "class-validator";
+
 
 export class ProjectDto {
   @ApiPropertyOptional({ description: 'Project UUID if using existing project', example: 'a47ac10b-58cc-4372-a567-0e02b2c3d480' })
   @IsOptional()
   @IsUUID()
-  project_id?: string ;
+   project_id?: string | null;
 
   @ApiPropertyOptional({ description: 'Work order number', example: 'WO-2025-001' })
   @IsOptional()
@@ -25,24 +22,15 @@ export class ProjectDto {
   @IsString()
   work_details_scope?: string;
 
-  @ApiPropertyOptional({ 
-    description: 'Project status',
-    enum: ['Planning', 'Cancelled', 'On_Hold', 'Active', 'Completed'], 
-    example: 'Planning' 
-  })
+  @ApiPropertyOptional({ description: 'Project status', enum: ['active', 'completed', 'cancelled', 'on_hold'], example: 'active' })
   @IsOptional()
-  @IsEnum(['Planning', 'Cancelled', 'On_Hold', 'Active', 'Completed'])
+  @IsEnum(['active', 'completed', 'cancelled', 'on_hold'])
   project_status?: string;
 
   @ApiPropertyOptional({ description: 'Project start date', example: '2025-01-01' })
   @IsOptional()
   @IsDateString()
   start_date?: string;
-
-  @ApiPropertyOptional({ description: 'Work order UUID' })
-  @IsOptional()
-  @IsUUID()
-  work_order_id?: string;
 
   @ApiPropertyOptional({ description: 'Expected completion date', example: '2025-03-01' })
   @IsOptional()
@@ -53,18 +41,4 @@ export class ProjectDto {
   @IsOptional()
   @IsNumber()
   project_value?: number;
-
-  @ApiPropertyOptional({ description: 'Income categories for the project' })
-  @IsArray()
-  @IsOptional()
-  @ValidateNested({ each: true })
-  @Type(() => CreateIncomeCategoryDto)
-  incomeCategories?: CreateIncomeCategoryDto[];
-
-  @ApiPropertyOptional({ description: 'Expense categories for the project' })
-  @IsArray()
-  @IsOptional()
-  @ValidateNested({ each: true })
-  @Type(() => ProjectExpenseCategory) 
-  expenseCategories?: ProjectExpenseCategory[];
 }
