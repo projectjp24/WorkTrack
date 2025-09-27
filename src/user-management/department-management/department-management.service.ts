@@ -12,7 +12,7 @@ export class DepartmentManagementService {
 
     async getAllDepartment(company_id: string){
         try {
-           
+            debugger
             return await this.departmentRepository.find({
                 where: {
                     company: { company_id },

@@ -2,9 +2,10 @@ import { WebSocketGateway, WebSocketServer, OnGatewayConnection, OnGatewayDiscon
 import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   cors: {
-   origin: 'https://worktrack.softgoway.in', // your frontend URL
+    origin: 'http://localhost:5173', // your frontend URL
     credentials: true,
   },
+
 })
 export class NotificationsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;

@@ -7,11 +7,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
    app.enableCors({
-    origin: ['https://worktrack.softgoway.in','http://localhost:5173','https://worktrack.dhpecrm.in'], // your frontend URL
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, 
+    origin: 'http://localhost:5173', // React frontend origin
+    credentials: true,  
   });
+
+ 
 
   const config = new DocumentBuilder()
     .setTitle('WorkTrack API')
@@ -37,7 +37,12 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/api', app, documentFactory);
 
-   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+    app.useGlobalPipes(new ValidationPipe({
+  whitelist: true, 
+  forbidNonWhitelisted: false,
+  transform: true,
+  skipMissingProperties: false,
+}));
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

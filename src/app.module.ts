@@ -11,16 +11,16 @@ import { SystemSettingsModule } from './system-settings/system-settings.module';
 import { NotificationsModule } from './notification/notification.module';
 import { InvoiceModule } from './invoice/invoice.module';
 import { CustomerModule } from './customer/customer.module';
+
 import { PurchaseOrderModule } from './accounts/purchase_order/purchase_order.module';
 import { VendorManagementModule } from './accounts/vendor-management/vendor-management.module';
-import { ProjectsModule } from './accounts/projects/projects.module';
 
 
 
 @Module({
   imports: [TypeOrmModule.forRoot(dataSourceOptions), UserManagementModule, AuthModule, CompanyModule, SystemSettingsModule,NotificationsModule, InvoiceModule, CustomerModule,
     PurchaseOrderModule,
-    VendorManagementModule,ProjectsModule],
+    VendorManagementModule],
   controllers: [AppController],
   providers: [AppService],
 })
