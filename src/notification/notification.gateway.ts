@@ -2,10 +2,9 @@ import { WebSocketGateway, WebSocketServer, OnGatewayConnection, OnGatewayDiscon
 import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   cors: {
-    origin: 'http://localhost:5173', // your frontend URL
+   origin: true, 
     credentials: true,
   },
-
 })
 export class NotificationsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server: Server;
