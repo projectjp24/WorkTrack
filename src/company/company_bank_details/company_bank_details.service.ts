@@ -77,7 +77,7 @@ export class CompanyBankDetailsService {
         });
 
         if (existingBank) {
-            throw new BadRequestException('Account number already exists for another bank.');
+            throw new BadRequestException('Account number already exists.');
         }
     }
 

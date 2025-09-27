@@ -3,11 +3,11 @@ import { DepartmentManagementService } from "./department-management.service";
 
 @Controller('department-management')
 export class DepartmentManagmentController {
-    constructor(private readonly roleManagementService: DepartmentManagementService) {}
+    constructor(private readonly DepartmentManagementService: DepartmentManagementService) {}
 
 
     @Get('allDepartments/:company_id')
-    async getAllRoles(@Param('company_id')company_id: string){
-        return await this.roleManagementService.getAllDepartment(company_id);
+    async getAllDepartment(@Param('company_id')company_id: string){
+        return await this.DepartmentManagementService.getAllDepartment(company_id);
     }
 }

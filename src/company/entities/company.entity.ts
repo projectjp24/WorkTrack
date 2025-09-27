@@ -92,7 +92,7 @@ export class Company {
   @OneToMany(() => CompanyBranch, (branch) => branch.company)
   branches?: CompanyBranch[];
 
-  // ✅ One-to-many relationship to CompanyBankEntity
+  // One-to-many relationship to CompanyBankEntity
   @OneToMany(() => CompanyBankEntity, (bankAccount) => bankAccount.company, {
     cascade: true,
   })
@@ -111,4 +111,8 @@ export class Company {
   permissions?: any;
   departments?: any;
   system_settings: any;
+  attendances: any;
+  monthlyAttendances: any;
+  purchaseOrders: any;
+  vendors: any;
 }

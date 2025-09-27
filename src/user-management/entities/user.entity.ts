@@ -1,8 +1,6 @@
 import { Company } from 'src/company/entities/company.entity';
 import { CompanyBranch } from 'src/company/entities/company-branch.entity';
-import {
-  DepartmentEntity,
-} from 'src/user-management/entities/department.entity';
+import { DepartmentEntity } from 'src/user-management/entities/department.entity';
 import { RoleEntity } from 'src/user-management/entities/roles.entity';
 import {
   Column,
@@ -19,6 +17,7 @@ import {
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   user_id: string;
+
   @Column({ unique: true })
   employee_id: string;
 
@@ -30,16 +29,12 @@ export class UserEntity {
   company: Company;
 
   // Many users belong to one branch (optional)
-  @ManyToOne(() => CompanyBranch, (branch) => branch.users, {
-    onDelete: 'SET NULL',
-  })
+  @ManyToOne(() => CompanyBranch, (branch) => branch.users, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'branch_id' })
   branch: CompanyBranch;
 
   // Many users belong to one department
-  @ManyToOne(() => DepartmentEntity, (dept) => dept.users, {
-    onDelete: 'SET NULL',
-  })
+  @ManyToOne(() => DepartmentEntity, (dept) => dept.users, { onDelete: 'SET NULL' })
   @JoinColumn({ name: 'department_id' })
   department: DepartmentEntity;
 
@@ -49,39 +44,54 @@ export class UserEntity {
   role: RoleEntity;
 
   // ---------- USER FIELDS ----------
-
   @Column({ nullable: true })
   company_id: string;
+
   @Column({ nullable: true })
   branch_id?: string | null;
+
   @Column()
   first_name: string;
+
   @Column()
   last_name: string;
+
   @Column({ unique: true })
   username: string;
+
   @Column()
   email: string;
+
   @Column()
   password: string;
+
   @Column()
   address: string;
+
   @Column({ select: false })
   phone_number: string;
+
   @Column()
   date_of_birth: string;
+
   @Column({ nullable: true })
   department_id: string;
+
   @Column()
   status: string;
+
   @Column({ nullable: true })
   role_id: string;
+
   @Column({ type: 'boolean', default: true })
   is_active: boolean;
+
   @Column({ type: 'boolean', default: false })
   is_deleted: boolean;
+
   @CreateDateColumn()
   createdAt: Timestamp;
+
   @UpdateDateColumn()
   updatedAt: Timestamp;
 }
